@@ -1,0 +1,21 @@
+Olá!
+
+Para utilizar a nossa aplicação, você precisará seguir alguns passos simples. 
+Primeiramente, acesse o site eddb.io e faça o filtro dos sistemas que deseja
+visitar. Em seguida, copie a lista gerada e cole dentro do arquivo de texto 
+chamado listEDDB.txt. Agora, execute o programa LimparListaEDDB.py 
+para limpar e formatar a lista de acordo com o padrão necessário 
+para o proximo passo.
+
+Com a lista limpa e formatada, você deve copiá-la e colá-la no CMDT Toolbox. 
+Nesta ferramenta, você poderá ajustar a rota de acordo com as suas preferências. 
+Depois que a rota estiver do seu gosto, copie a tabela gerada para o arquivo 
+de texto chamado listCMDTBOX.txt.
+
+Por fim, execute o programa CriarLista.py para processar a lista de sistemas 
+gerada pelo CMDT Toolbox e prepará-la para uso com o nosso aplicativo. 
+Agora, basta executar o programa SystemListApp.py e você terá acesso 
+à sua lista personalizada de sistemas.
+
+Caso você encontre qualquer dificuldade durante o processo, não hesite 
+em entrar em contato conosco.
