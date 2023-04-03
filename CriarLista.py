@@ -6,11 +6,16 @@ with open('listCMDTBOX.txt', 'r') as file:
     lines = [line.strip() for line in file.readlines()]
 
 # Extrai os valores da primeira coluna e salva como uma lista de strings
-col1_values = []
+system = []
+ly =[]
 for line in lines:
     columns = line.split('\t')
-    col1_values.append(columns[0])
+    system.append(columns[0])
+    ly.append(columns[3])
 
-# Salva a lista de valores da primeira coluna como um arquivo JSON
+# Cria um dicionário com as duas listas
+data = {"system": system, "ly": ly}
+
+# Salva o dicionário em um arquivo JSON
 with open('./data/systems.json', 'w') as file:
-    json.dump(col1_values, file)
+    json.dump(data, file)
