@@ -4,9 +4,10 @@ import time
 import threading
 import os
 import subprocess
+import json
 
 # Chama o script listCMDTBOX.py
-subprocess.call(['python', 'CriarLista.py'])
+subprocess.call(['python', 'CalcularRotas.py'])
 
 config_file = './data/config.json'
 # Verifica se o arquivo de configuração existe e cria um novo se não existir
