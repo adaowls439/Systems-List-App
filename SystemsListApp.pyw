@@ -29,8 +29,19 @@ button_cores = ('#f87532', 'black', '#f87532')
 
 current_name_index = config['current_index']
 
+def reload_systems_file():
+    # Load the new data from the systems.json file
+    with open('./data/systems.json') as f:
+        new_data = json.load(f)
+
+    # Update the data and return the new data
+    data['system'] = new_data['system']
+    data['ly'] = new_data['ly']
+    return data
+
 # define o layout da janela
 layout = [
+    [sg.Button('Recarregar', button_color=button_cores)],
     [sg.Text('System', size=(20,1), font=('Arial', 12), justification='right', text_color=font_color, background_color='black'),
      sg.Text('{}/{}'.format(current_name_index+1, len(data['system'])), size=(20,1), font=('Arial', 12), justification='left', text_color=font_color, background_color='black', key='-COUNTER-')],
     [sg.Text(data['system'][current_name_index], size=(18,1), font=('Arial', 18, 'bold'), background_color='black', justification='center', key='-NAME-'),
@@ -47,7 +58,6 @@ window = sg.Window('Lista de Sistemas. by: adaowls439', layout, element_justific
 def enable_copy_button():
     time.sleep(2)  # espera 5 segundos
     window['Copiar'].update(disabled=False)
-
 
 # Define o índice atual com base no valor armazenado no arquivo de configuração
 
@@ -68,6 +78,7 @@ while True:
         window['Próximo'].click()
         window['Copiar'].update(disabled=True)
         threading.Thread(target=enable_copy_button).start()
+        #subprocess.Popen(['python', 'ColarSystema.py'])
 
     if event == 'Próximo':
         if current_name_index < len(data['system']) - 1:
@@ -76,6 +87,8 @@ while True:
             window['-COUNTER-'].update('{}/{}'.format(current_name_index+1, len(data['system'])))
             window['-LY-'].update(data['ly'][current_name_index])
 
+    if event == 'Recarregar':
+        reload_systems_file()
 
 # Atualiza o índice atual no arquivo de configuração
         config['current_index'] = current_name_index

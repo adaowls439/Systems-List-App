@@ -2,7 +2,7 @@ import numpy as np
 from scipy.spatial import distance_matrix
 import requests
 import json
-response = requests.get('http://localhost:3001/api/phar')
+response = requests.get('http://localhost:3001/api/gene')
 data = response.json()
 
 # Definindo a lista de pontos
