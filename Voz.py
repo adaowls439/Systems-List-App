@@ -1,5 +1,6 @@
 import speech_recognition as sr
 from unidecode import unidecode
+from logController import log as logtemp
 import pydirectinput
 import time
 import pyttsx3
@@ -123,7 +124,7 @@ def bip():
     winsound.Beep(200, 50)
 
 def msg(m):
-    print(__NAME__ + m)
+    log(m)
     if not mudo:  # Se 'mudo' for False
         falar(m)
     else:
@@ -131,7 +132,9 @@ def msg(m):
         bip()  # Chama a função para reproduzir o som de bip
 
 def log(m):
-    print(__NAME__ + m)
+    txt = __NAME__ + m
+    print(txt)
+    logtemp(txt)
 
 comandos_por_voz = ComandosPorVoz()
 comandos_por_voz.ouvir_comando()

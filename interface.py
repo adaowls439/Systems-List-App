@@ -3,10 +3,10 @@ import PySimpleGUI as sg
 # Set style
 font_color = '#f87532'
 button_colors = ('#f87532', 'black', '#f87532')
-background = '#777777'
+background = 'black'
 checkbox_background_color = 'black'  # Cor de fundo do checkbox
 checkbox_text_color = '#f87532'  # Cor do texto do checkbox
-window_size = ('525', '250')
+window_size = ('525', '300')
 fontBold1 = ('Arial', 18, 'bold')
 fontBasic =  ('Arial', 9)
 
@@ -27,9 +27,10 @@ def create_main_window(config, data, current_name_index, hge):
         [sg.Text('Assistente comandos: Coletar HGE, Próximo HGE, Assistente Aguarde', size=(400, 1), font=fontBasic, justification='left', text_color=font_color, background_color='black',visible=True, key='-ASSISTENTE-')],
         [sg.Text('Assistente Mudo, Assistente Desativar Mudo.', size=(400, 1), font=fontBasic, justification='left', text_color=font_color, background_color='black',visible=True, key='-CMDS-')],
         [sg.Text('Colar Sistema:', size=(12, 1), font=fontBasic, justification='left', text_color=font_color, background_color='black'),
-        sg.Text('Ativado' if config.get('checkbox_state', {}).get('option1', False) else 'Desativado', size=(10, 1), font=fontBasic, justification='left', text_color=font_color if config.get('checkbox_state', {}).get('option1', False) else font_color, background_color='black', key='-COLAR-SISTEMA-'),
+        sg.Text('Ativado' if config.get('checkbox_state', {}).get('option1', False) else 'Desativado', size=(10, 1), font=fontBasic, justification='left', text_color='white', background_color='black', key='-COLAR-SISTEMA-'),
         sg.Text('Assistente:', size=(10, 1), font=fontBasic, justification='left', text_color=font_color, background_color='black'),
-        sg.Text('Ativado' if config.get('checkbox_state', {}).get('option2', False) else 'Desativado', size=(10, 1), font=fontBasic, justification='left', text_color=font_color if config.get('checkbox_state', {}).get('option2', False) else font_color, background_color='black', key='-ASSISTENTE-STATUS-')]
+        sg.Text('Ativado' if config.get('checkbox_state', {}).get('option2', False) else 'Desativado', size=(10, 1), font=fontBasic, justification='left', text_color='white', background_color='black', key='-ASSISTENTE-STATUS-')],
+        [sg.Multiline(size=(80, 20), key='-LOG-',background_color=background, font=fontBasic, text_color=font_color, autoscroll=True)]
     ]
 
     sg.set_options(icon='./icon/logo.ico')

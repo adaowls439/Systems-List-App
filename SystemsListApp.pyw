@@ -5,6 +5,7 @@ import subprocess
 from interface import create_settings_window, create_main_window
 from assistant import chamar_assistente, fechar_assistente
 from data_handler import load_config, load_system_data, save_config, update_checkbox_state
+from logController import log, logClear, read_log_file
 
 
 config_file = './data/config.json'
@@ -45,12 +46,24 @@ def atualizarDados():
     window['-LY-'].update(data['ly'][current_name_index])
 
 
+def closeAppSafe():
+    fechar_assistente()  # Fechar o assistente antes de fechar a janela principal
+    logClear() # Limpa o log temporario
+
+def update_log_field(window):
+    while True:
+        log_text = read_log_file()
+        window.write_event_value('-UPDATE-LOG-', log_text)
+        time.sleep(1)
+
+log_update_thread = threading.Thread(target=update_log_field, args=(window,), daemon=True)
+log_update_thread.start()
 
 # Main loop for window events
 while True:
     event, values = window.read()
     if event == sg.WINDOW_CLOSED or event == 'Exit':
-        fechar_assistente()  # Fechar o assistente antes de fechar a janela principal
+        closeAppSafe()
         break
 
     elif event == 'Settings':
@@ -76,8 +89,9 @@ while True:
 
     if event == 'Copiar':
         sg.clipboard_set(data['system'][current_name_index])
-        window['-CONFIRMAR-'].update(
-            value=f'Copiado: ({current_name_index+1})  {data["system"][current_name_index]}  -> {data["ly"][current_name_index]}', visible=True)
+        msg = f'Copiado: ({current_name_index+1})  {data["system"][current_name_index]}  -> {data["ly"][current_name_index]}'
+        window['-CONFIRMAR-'].update(value=msg, visible=True)
+        log(msg)
         window['Próximo'].click()
         window['Copiar'].update(disabled=True)
         threading.Thread(target=enable_copy_button, daemon=True).start()
@@ -92,6 +106,9 @@ while True:
         if current_name_index < len(data['system']) - 1:
             current_name_index += 1
             atualizarDados()
+    
+    elif event == '-UPDATE-LOG-':
+        window['-LOG-'].update(value=values['-UPDATE-LOG-'])
 
     # Verificar se o evento está presente no mapeamento
     if event in event_mapping:
@@ -108,8 +125,9 @@ while True:
 
         atualizarDados()
 
-        window['-CONFIRMAR-'].update(
-            value=f'Atualizado para {event}', visible=True)
+        msg = f'Atualizado para {event}'
+        window['-CONFIRMAR-'].update(value=msg, visible=True)
+        log(msg)
 
 # Update the current index in the configuration file
 config['current_index'] = current_name_index

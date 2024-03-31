@@ -50,3 +50,10 @@ def update_checkbox_state(config, config_file, values):
 
     # Write updated configuration back to file
     save_config(config,config_file)
+
+def read_log_file():
+    try:
+        with open('log.txt', 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return ""
